@@ -21,8 +21,11 @@ jobs:
       with:
         esp_idf_version: v5.4
         target: ${{ matrix.platform }}
+    - name: Rename file bin
+      shell: bash
+      run: cp build/hello_world.bin ${{ matrix.platform }}-hello_world.bin
     - name: Upload artifact bin
       uses: actions/upload-artifact@v4
       with:
-        name: hello_world.${{ matrix.platform }}.bin
-        path: build/hello_world.bin
+        name: firmware-${{ matrix.platform }}
+        path: ${{ matrix-platform }}-hello_world.bin
