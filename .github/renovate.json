@@ -15,7 +15,7 @@
       "fileMatch": ["idf_component.yml$"],
       "datasourceTemplate": "custom.espressif",
       "matchStrings": [
-        "(?<depName>[^:]+):\\s*version:\\s*\"(?<currentValue>[^\"]+)\""
+        "(?<depName>[^\\s:]+):\\s*version:\\s*\"(?<currentValue>[^\"]+)\""
       ],
       "versioningTemplate": "npm"
     }
