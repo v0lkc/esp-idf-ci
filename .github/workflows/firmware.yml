@@ -29,12 +29,22 @@ jobs:
       with:
         name: firmware-${{ matrix.platform }}
         path: ${{ matrix.platform }}-hello_world.bin
+
   release:
     runs-on: ubuntu-latest
     needs: build
+    env:
+      SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+      SIGNING_KEY_FILENAME: key.pem
     steps:
     - uses: actions/download-artifact@v4
       with:
         path: firmware
         pattern: firmware-*
         merge-multiple: true
+    - name: Fetch signing key
+      shell: bash
+      run: echo $SIGNING_KEY > $SIGNING_KEY_FILENAME
+    - name: Remove signing key
+      shell: bash
+      run: rm -f $SIGNING_KEY_FILENAME
