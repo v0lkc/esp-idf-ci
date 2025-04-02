@@ -9,7 +9,7 @@ jobs:
 
   sign:
     runs-on: ubuntu-latest
-    needs: build
+    needs: call-workflow-build
     env:
       SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
     strategy:
