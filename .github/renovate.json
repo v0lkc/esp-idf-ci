@@ -12,7 +12,7 @@
     },
     {
       "customType": "regex",
-      "fileMatch": ["\\idf_component.yml$"],
+      "fileMatch": ["idf_component.yml$"],
       "datasourceTemplate": "custom.espressif",
       "matchStrings": [
         "^  (?<packageName>[^:]+):\\n    version:\\s*\"(?<currentValue>[^\"]+)\""
