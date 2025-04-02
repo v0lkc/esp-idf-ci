@@ -27,24 +27,31 @@ jobs:
     - name: Upload artifact bin
       uses: actions/upload-artifact@v4
       with:
-        name: firmware-${{ matrix.platform }}
+        name: unsigned-firmware-${{ matrix.platform }}
         path: ${{ matrix.platform }}-hello_world.bin
 
-  release:
+  sign:
     runs-on: ubuntu-latest
     needs: build
     env:
       SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
-      SIGNING_KEY_FILENAME: key.pem
+    strategy:
+      matrix:
+        platform: [esp32, esp32s2, esp32s3]
     steps:
     - uses: actions/download-artifact@v4
       with:
-        path: firmware
-        pattern: firmware-*
-        merge-multiple: true
-    - name: Fetch signing key
-      shell: bash
-      run: echo $SIGNING_KEY > $SIGNING_KEY_FILENAME
-    - name: Remove signing key
-      shell: bash
-      run: rm -f $SIGNING_KEY_FILENAME
+        name: unsigned-firmware-${{ matrix.platform }}
+    - name: Load SIGNING_KEY
+      run: echo "$SIGNING_KEY" > ./signing_key.pem
+    - name: Sign firmware
+      uses: espressif/esp-idf-ci-action@main
+      with:
+        command: espsecure.py sign_data -v1 --keyfile signing_key.pem --output ${{ matrix.platform }}-hello_world.signed.bin ${{ matrix.platform }}-hello_world.bin
+    - name: Remove SIGNING_KEY
+      run: rm -f ./signing_key.pem
+    - name: Upload artifact bin
+      uses: actions/upload-artifact@v4
+      with:
+        name: unsigned-firmware-${{ matrix.platform }}
+        path: ${{ matrix.platform }}-hello_world.signed.bin
