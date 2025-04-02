@@ -47,6 +47,7 @@ jobs:
     - name: Sign firmware
       uses: espressif/esp-idf-ci-action@main
       with:
+        esp_idf_version: v5.4
         command: espsecure.py sign_data -v1 --keyfile signing_key.pem --output ${{ matrix.platform }}-hello_world.signed.bin ${{ matrix.platform }}-hello_world.bin
     - name: Remove SIGNING_KEY
       run: rm -f ./signing_key.pem
