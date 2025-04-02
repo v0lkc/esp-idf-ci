@@ -44,4 +44,4 @@ jobs:
     steps:
     - uses: actions/download-artifact@v4
       with:
-        pattern: *-firmware-signed
+        pattern: '*-firmware-signed'
