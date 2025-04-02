@@ -1,0 +1,31 @@
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platform: [esp32, esp32s2, esp32s3]
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+      with:
+        submodules: 'recursive'
+    - name: esp-idf build
+      uses: espressif/esp-idf-ci-action@v1
+      with:
+        esp_idf_version: v5.4
+        target: ${{ matrix.platform }}
+    - name: Rename file bin
+      shell: bash
+      run: cp build/hello_world.bin ${{ matrix.platform }}-hello_world.bin
+    - name: Upload artifact bin
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ matrix.platform }}-firmware-unsigned
+        path: ${{ matrix.platform }}-hello_world.bin
