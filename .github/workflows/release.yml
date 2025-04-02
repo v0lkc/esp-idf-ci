@@ -37,3 +37,11 @@ jobs:
       with:
         name: ${{ matrix.platform }}-firmware-signed
         path: ${{ matrix.platform }}-hello_world.signed.bin
+
+  release:
+    runs-on: ubuntu-latest
+    needs: sign
+    steps:
+    - uses: actions/download-artifact@v4
+      with:
+        pattern: *-firmware-signed
