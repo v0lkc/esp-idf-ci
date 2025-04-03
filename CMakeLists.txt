@@ -7,5 +7,6 @@ project(hello_world)
 
 add_custom_target(
     factory_image ALL
+    DEPENDS ${CMAKE_BINARY_DIR}/flash_args
     python -m esptool --chip ${chip_model} merge_bin -o ${CMAKE_PROJECT_NAME}-factory.bin @flash_args
 )
