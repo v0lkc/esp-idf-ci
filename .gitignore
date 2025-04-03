@@ -40,6 +40,7 @@ build
 
 # generated sdkconfig
 sdkconfig
+sdkconfig.old
 
 # managed_components for examples
 managed_components
@@ -55,3 +56,5 @@ XUNIT_RESULT*.xml
 
 # clang config (for LSP)
 .clangd
+
+secure_boot_signing_key.pem
