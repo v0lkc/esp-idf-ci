@@ -21,7 +21,7 @@ jobs:
     steps:
     - uses: actions/download-artifact@v4
       with:
-        name: ${{ matrix.platform }}-firmware-unsigned
+        name: ${{ matrix.platform }}-firmware-ota-unsigned
     - name: Load SIGNING_KEY
       run: echo "$SIGNING_KEY" > ./signing_key.pem
     - name: Sign firmware
@@ -35,7 +35,7 @@ jobs:
     - name: Upload artifact bin
       uses: actions/upload-artifact@v4
       with:
-        name: ${{ matrix.platform }}-firmware-signed
+        name: ${{ matrix.platform }}-firmware-ota-signed
         path: ${{ matrix.platform }}-hello_world.signed.bin
 
   release:
