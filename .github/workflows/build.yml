@@ -38,9 +38,9 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.platform }}-firmware-factory-unsigned
-        path: ${{ matrix.platform }}-hello_world-factory.bin
+        path: build/hello_world-factory.bin
     - name: Upload artifact bin
       uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.platform }}-firmware-ota-unsigned
-        path: ${{ matrix.platform }}-hello_world.bin
+        path: build/hello_world.bin
