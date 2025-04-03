@@ -37,10 +37,5 @@ jobs:
     - name: Upload artifact bin
       uses: actions/upload-artifact@v4
       with:
-        name: ${{ matrix.platform }}-firmware-factory
-        path: build/hello_world-factory.bin
-    - name: Upload artifact bin
-      uses: actions/upload-artifact@v4
-      with:
-        name: ${{ matrix.platform }}-firmware-ota
-        path: build/hello_world.bin
+        name: ${{ matrix.platform }}
+        path: build/hello_world*.bin
