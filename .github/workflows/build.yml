@@ -37,7 +37,7 @@ jobs:
     - name: Upload artifact bin
       uses: actions/upload-artifact@v4
       with:
-        name: ${{ matrix.platform }}-factory-unsigned
+        name: ${{ matrix.platform }}-firmware-factory-unsigned
         path: ${{ matrix.platform }}-hello_world-factory.bin
     - name: Upload artifact bin
       uses: actions/upload-artifact@v4
