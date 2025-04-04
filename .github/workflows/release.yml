@@ -18,7 +18,9 @@ jobs:
       with:
         submodules: 'recursive'
     - name: Load SIGNING_KEY
-      run: echo "${{ secrets.SIGNING_KEY }}" > ./secure_boot_signing_key.pem
+      env:
+        SECURE_BOOT_SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+      run: echo "$SECURE_BOOT_SIGNING_KEY" > ./secure_boot_signing_key.pem
     - name: esp-idf build
       uses: espressif/esp-idf-ci-action@v1
       env:
