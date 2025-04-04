@@ -11,9 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        config: [nosb]
         platform: [esp32, esp32s2, esp32s3]
     env:
-      SDKCONFIG_DEFAULTS: "sdkconfig.defaults;sdkconfig.release.defaults"
+      BUILD_CONFIG: ${{ matrix.config }}
     steps:
     - name: Checkout repo
       uses: actions/checkout@v4
