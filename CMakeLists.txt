@@ -2,6 +2,8 @@
 # CMakeLists in this exact order for cmake to work correctly
 cmake_minimum_required(VERSION 3.16)
 
+message("\nBUILD_CONFIG: $ENV{BUILD_CONFIG}\n")
+
 if(DEFINED ENV{BUILD_CONFIG})
     set(SDKCONFIG_DEFAULTS "sdkconfig.defaults;sdkconfig.ci.defaults;sdkconfig.ci.$ENV{BUILD_CONFIG}")
 endif()
