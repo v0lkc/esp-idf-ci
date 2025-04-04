@@ -11,8 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        config: [nosb, sb]
         platform: [esp32, esp32s2, esp32s3]
+        config: [nosb, sb]
     steps:
     - name: Checkout repo
       uses: actions/checkout@v4
@@ -33,7 +33,7 @@ jobs:
     - name: Upload artifact bin
       uses: actions/upload-artifact@v4
       with:
-        name: ${{ matrix.platform }}
+        name: ${{ matrix.platform }}-${{ matrix.config }}
         path: build/${{ matrix.platform }}_*.bin
 
   release:
