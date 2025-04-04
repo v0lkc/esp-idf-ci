@@ -8,3 +8,8 @@ project(hello_world)
 add_custom_command(TARGET app POST_BUILD
     COMMAND python -m esptool --chip ${chip_model} merge_bin -o ${CMAKE_PROJECT_NAME}-factory.bin @flash_args
 )
+
+add_custom_command(TARGET app POST_BUILD
+    COMMAND cp ${CMAKE_PROJECT_NAME}.bin ${chip_model}_nosb_${CMAKE_PROJECT_NAME}_${PROJECT_VER}.app.bin
+    COMMAND cp ${CMAKE_PROJECT_NAME}-factory.bin ${chip_model}_nosb_${CMAKE_PROJECT_NAME}_${PROJECT_VER}.factory.bin
+)

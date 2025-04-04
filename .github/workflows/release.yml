@@ -32,7 +32,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.platform }}
-        path: build/hello_world*.bin
+        path: build/${{ matrix.platform }}_*.bin
 
   release:
     runs-on: ubuntu-latest
