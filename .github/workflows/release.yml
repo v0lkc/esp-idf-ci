@@ -13,8 +13,6 @@ jobs:
       matrix:
         config: [nosb]
         platform: [esp32, esp32s2, esp32s3]
-    env:
-      BUILD_CONFIG: ${{ matrix.config }}
     steps:
     - name: Checkout repo
       uses: actions/checkout@v4
@@ -29,6 +27,7 @@ jobs:
       with:
         esp_idf_version: v5.4.1
         target: ${{ matrix.platform }}
+        extra_docker_args: -e BUILD_CONFIG=${{ matrix.config }}
     - name: Remove SIGNING_KEY
       run: rm -f ./secure_boot_signing_key.pem
     - name: Upload artifact bin

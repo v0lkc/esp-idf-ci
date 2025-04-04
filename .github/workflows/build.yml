@@ -28,8 +28,6 @@ jobs:
         submodules: 'recursive'
     - name: esp-idf build
       uses: espressif/esp-idf-ci-action@v1
-      env:
-        BUILD_CONFIG: "nosb"
       with:
         esp_idf_version: v5.4.1
         target: ${{ matrix.platform }}
