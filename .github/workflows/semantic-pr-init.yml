@@ -12,6 +12,7 @@ permissions:
 jobs:
   initialize-semantic-pr-attributes:
     runs-on: ubuntu-latest
+    name: Initialize PR Attributes
     steps:
       - name: Assign PR Author as Assignee
         if: ${{ github.actor != 'renovate' }}
