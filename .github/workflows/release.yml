@@ -49,4 +49,16 @@ jobs:
         files: "**/*.bin"
         generate_release_notes: true
         body: |
-          ## Installation instructions
+          ## Installation Instructions
+
+          To set up your ESP32 controller with the firmware, begin by flashing the factory image. This image is used for the initial installation, while app images are specifically for OTA updates.
+
+          ```bash
+          esptool.py --chip <CHIP> -p <PORT> write_flash 0x0 <CHIP>_<SECURE_BOOT>_hello_world_${{ github.ref_name }}.factory.bin
+          ```
+
+          Make sure to replace the placeholders with the following:
+
+          - `<CHIP>` with your ESP32 model (e.g., `esp32`, `esp32s2`, `esp32s3`)
+          - `<PORT>` with your device's port (e.g., `/dev/ttyUSB0` or `COM3`)
+          - `<SECURE_BOOT>` with `nosb` or `sb` depending on your secure boot preference
