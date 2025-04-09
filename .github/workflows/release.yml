@@ -32,6 +32,9 @@ jobs:
         extra_docker_args: -e BUILD_CONFIG=${{ matrix.config }}
     - name: Remove SIGNING_KEY
       run: rm -f ./secure_boot_signing_key.pem
+    - uses: actions/attest-build-provenance@v2
+      with:
+        subject-path: build/${{ matrix.platform }}_*.bin
     - name: Upload artifact bin
       uses: actions/upload-artifact@v4
       with:
