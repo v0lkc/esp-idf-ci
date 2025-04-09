@@ -1,0 +1,56 @@
+name: Set default values to PR
+
+on:
+  pull_request:
+    types:
+      - opened
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  set-default-values:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Assign creator as assignee
+        if: ${{ github.actor != 'renovate' }}
+        uses: actions/github-script@v7
+        script:
+          await github.rest.issues.addAssignees({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: context.issue.number,
+            assignees: [context.actor]
+          });
+
+      - name: Set default labels
+        if: ${{ github.actor != 'dependabot[bot]' }}
+        uses: actions/github-script@v7
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+        with:
+          script: |
+            const title = process.env.TITLE;
+
+            let defaultLabels = [];
+            if (title.startsWith("feat:")) {
+              defaultLabels.push("enhancement");
+            } else if (title.startsWith("fix:")) {
+              defaultLabels.push("bug");
+            } else if (title.startsWith("docs:")) {
+              defaultLabels.push("documentation");
+            } else if (title.startsWith("test:")) {
+              defaultLabels.push("test setup", "internal", "ignore-for-release");
+            } else if (title.startsWith("refactor:")) {
+              defaultLabels.push("internal", "ignore-for-release", "refactoring");
+            } else {
+              defaultLabels.push("internal", "ignore-for-release");
+            }
+
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              labels: defaultLabels
+            });
