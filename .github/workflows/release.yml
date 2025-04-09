@@ -48,3 +48,5 @@ jobs:
       with:
         files: "**/*.bin"
         generate_release_notes: true
+        body: |
+          ## Installation instructions
