@@ -1,3 +1,5 @@
+name: "Firmware Release"
+
 on:
   push:
     tags:
