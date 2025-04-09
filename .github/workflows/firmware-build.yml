@@ -20,20 +20,21 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    name: "Build"
     strategy:
       matrix:
         platform: [esp32, esp32s2, esp32s3]
     steps:
-    - name: Checkout repo
+    - name: Checkout Repository
       uses: actions/checkout@v4
       with:
         submodules: 'recursive'
-    - name: esp-idf build
+    - name: Build with ESP-IDF
       uses: espressif/esp-idf-ci-action@v1
       with:
         esp_idf_version: v5.4.1
         target: ${{ matrix.platform }}
-    - name: Upload artifact bin
+    - name: Upload Artifacts
       uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.platform }}

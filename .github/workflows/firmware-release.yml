@@ -13,28 +13,29 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    name: "Build"
     strategy:
       matrix:
         platform: [esp32, esp32s2, esp32s3]
         config: [nosb, sb]
     steps:
-    - name: Checkout repo
+    - name: Checkout Repository
       uses: actions/checkout@v4
       with:
         submodules: 'recursive'
-    - name: Load SIGNING_KEY
+    - name: Load Signing Key
       env:
         SECURE_BOOT_SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
       run: echo "$SECURE_BOOT_SIGNING_KEY" > ./secure_boot_signing_key.pem
-    - name: esp-idf build
+    - name: Build with ESP-IDF
       uses: espressif/esp-idf-ci-action@v1
       with:
         esp_idf_version: v5.4.1
         target: ${{ matrix.platform }}
         extra_docker_args: -e BUILD_CONFIG=${{ matrix.config }}
-    - name: Remove SIGNING_KEY
+    - name: Remove Signing Key
       run: rm -f ./secure_boot_signing_key.pem
-    - name: Upload artifact bin
+    - name: Upload Artifacts
       uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.platform }}-${{ matrix.config }}
@@ -42,15 +43,18 @@ jobs:
 
   release:
     runs-on: ubuntu-latest
+    name: "Release"
     needs: build
     steps:
-    - uses: actions/download-artifact@v4
+    - name: Download Artifacts
+      uses: actions/download-artifact@v4
       with:
         pattern: '*'
-    - uses: actions/attest-build-provenance@v2
+    - name: Attest Provenance
+      uses: actions/attest-build-provenance@v2
       with:
         subject-path: "**/*.bin"
-    - name: Release
+    - name: Create Release
       uses: softprops/action-gh-release@v2
       with:
         files: "**/*.bin"
