@@ -49,7 +49,7 @@ jobs:
         pattern: '*'
     - uses: actions/attest-build-provenance@v2
       with:
-        subject-path: **/*.bin
+        subject-path: "**/*.bin"
     - name: Release
       uses: softprops/action-gh-release@v2
       with:
