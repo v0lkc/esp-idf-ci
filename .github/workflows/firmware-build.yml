@@ -37,7 +37,7 @@ jobs:
       uses: actions/cache/restore@v4
       with:
           path: managed_components
-          key: ${{ runner.os }}-managed_components-${{ hashFiles(env.DEPENDENCIES_LOCK) }}
+          key: ${{ runner.os }}-${{ hashFiles(env.DEPENDENCIES_LOCK) }}
     - name: Build with ESP-IDF
       uses: espressif/esp-idf-ci-action@v1
       with:
