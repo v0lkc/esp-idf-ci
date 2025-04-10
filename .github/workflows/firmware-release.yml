@@ -18,11 +18,19 @@ jobs:
       matrix:
         platform: [esp32, esp32s2, esp32s3]
         config: [nosb, sb]
+    env:
+      DEPENDENCIES_LOCK: dependencies.lock.${{ matrix.platform }}
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4
       with:
         submodules: 'recursive'
+    - name: Restore Managed Components from Cache
+      id: cache-managed-components
+      uses: actions/cache/restore@v4
+      with:
+          path: managed_components
+          key: ${{ runner.os }}-${{ hashFiles(env.DEPENDENCIES_LOCK) }}
     - name: Load Signing Key
       env:
         SECURE_BOOT_SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
@@ -35,6 +43,11 @@ jobs:
         extra_docker_args: -e BUILD_CONFIG=${{ matrix.config }}
     - name: Remove Signing Key
       run: rm -f ./secure_boot_signing_key.pem
+    - name: Cache Managed Components
+      uses: actions/cache/save@v4
+      with:
+        path: managed_components
+        key: ${{ steps.cache-managed-components.outputs.cache-primary-key }}
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4
       with:
