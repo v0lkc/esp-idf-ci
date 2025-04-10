@@ -9,6 +9,7 @@ if(DEFINED ENV{BUILD_CONFIG})
 endif()
 
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
+idf_build_set_property(DEPENDENCIES_LOCK dependencies.lock.${IDF_TARGET})
 project(hello_world)
 
 add_custom_command(TARGET app POST_BUILD
