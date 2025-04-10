@@ -33,7 +33,7 @@ jobs:
       uses: actions/cache@v4
       with:
           path: 'managed_components'
-          key: ${{ runner.os }}-managed_components-${{ hashFiles("dependencies.lock.${{ matrix.platform }}") }}
+          key: ${{ runner.os }}-managed_components-${{ hashFiles('dependencies.lock.${{ matrix.platform }}') }}
     - name: Build with ESP-IDF
       uses: espressif/esp-idf-ci-action@v1
       with:
