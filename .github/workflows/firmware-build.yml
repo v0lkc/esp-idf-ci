@@ -29,16 +29,22 @@ jobs:
       uses: actions/checkout@v4
       with:
         submodules: 'recursive'
-    - name: Cache Managed Components
-      uses: actions/cache@v4
+    - name: Restore Managed Components from Cache
+      id: cache-managed-components
+      uses: actions/cache/restore@v4
       with:
-          path: 'managed_components'
+          path: managed_components
           key: ${{ runner.os }}-managed_components-${{ hashFiles('dependencies.lock.${{ matrix.platform }}') }}
     - name: Build with ESP-IDF
       uses: espressif/esp-idf-ci-action@v1
       with:
         esp_idf_version: v5.4.1
         target: ${{ matrix.platform }}
+    - name: Cache Managed Components
+      uses: actions/cache/save@v4
+      with:
+        path: managed_components
+        key: ${{ steps.cache-managed-components.outputs.cache-primary-key }}
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4
       with:
