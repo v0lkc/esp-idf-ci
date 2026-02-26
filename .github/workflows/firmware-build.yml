@@ -48,7 +48,7 @@ jobs:
         path: managed_components
         key: ${{ steps.cache-managed-components.outputs.cache-primary-key }}
     - name: Upload Artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: ${{ matrix.platform }}
         path: build/${{ matrix.platform }}_*.bin
