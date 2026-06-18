@@ -28,7 +28,7 @@ jobs:
       DEPENDENCIES_LOCK: dependencies.lock.${{ matrix.platform }}
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
       with:
         submodules: 'recursive'
     - name: Restore Managed Components from Cache
