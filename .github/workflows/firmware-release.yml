@@ -27,7 +27,7 @@ jobs:
         submodules: 'recursive'
     - name: Restore Managed Components from Cache
       id: cache-managed-components
-      uses: actions/cache/restore@v4
+      uses: actions/cache/restore@v6
       with:
           path: managed_components
           key: ${{ runner.os }}-${{ hashFiles(env.DEPENDENCIES_LOCK) }}
@@ -44,7 +44,7 @@ jobs:
     - name: Remove Signing Key
       run: rm -f ./secure_boot_signing_key.pem
     - name: Cache Managed Components
-      uses: actions/cache/save@v4
+      uses: actions/cache/save@v6
       with:
         path: managed_components
         key: ${{ steps.cache-managed-components.outputs.cache-primary-key }}
