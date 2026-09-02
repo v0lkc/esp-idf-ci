@@ -40,7 +40,7 @@ jobs:
     - name: Build with ESP-IDF
       uses: espressif/esp-idf-ci-action@v1
       with:
-        esp_idf_version: v5.4.1
+        esp_idf_version: v6.0.3
         target: ${{ matrix.platform }}
     - name: Cache Managed Components
       uses: actions/cache/save@v4
